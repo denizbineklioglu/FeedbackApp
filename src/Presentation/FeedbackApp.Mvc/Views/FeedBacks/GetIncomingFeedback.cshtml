@@ -1,0 +1,43 @@
+﻿@model IList<FeedbackApp.DataTransferObjects.Responses.FeedBackListResponse>
+@{
+    var count = ViewBag.listCount;
+}
+<div class="wrap">
+    @for (int i = 0; i < count; i++)
+    {
+
+        @if (i % 2 == 0)
+        {
+            <div class="box marRight40">
+                <div class="panel">
+                    <div class="title">
+                        <h1>@Model[i].Title</h1>
+                    </div>
+                    <div class="content">
+                        <p>
+                            @Model[i].Description
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="box">
+                <div class="panel">
+                    <div class="title">
+                        <h1>@Model[i].Title</h1>
+                    </div>
+                    <div class="content">
+                        <p>@Model[i].Description</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+    
+</div>
+
+
+

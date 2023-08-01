@@ -1,0 +1,32 @@
+﻿@model FeedbackApp.DataTransferObjects.Requests.CreateFeedBackRequest
+
+<div class="page">
+    <div class="panel">
+        <div class="title">
+            <h1>Feedback Gönder</h1>
+        </div>
+        <div class="content">
+            <form asp-action="CreateFeedback" asp-controller="FeedBacks" method="post">
+                <div class="contact-form mar-top30">
+                    <input type="email" asp-for="SenderMail" value="@ViewBag.currentUser" hidden />
+                    <label>
+                        <span>Email:</span>
+                        <input type="text" asp-for="ReceiverMail" class="input_text" id="email" />
+                    </label>
+                    <label>
+                        <span>Konu:</span>
+                        <input type="text" asp-for="Title" class="input_text" id="subject" />
+                    </label>
+                    <label>
+                        <span>Açıklama:</span>
+                        <textarea class="message" asp-for="Description" id="feedback"></textarea>
+                        <br />
+                        <br />
+                        <br />
+                        <input type="submit" value="Gönder" style="background-color: #e7e2cf; border: none; padding: 15px 20px; border-radius: 10px;" class="btn btn-primary" />
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

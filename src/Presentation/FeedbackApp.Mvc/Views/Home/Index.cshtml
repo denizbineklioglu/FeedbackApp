@@ -1,0 +1,20 @@
+﻿<div class="banner-wrap">
+    <div class="banner">
+        <img src="~/images/kalem.png" alt="banner" />
+        <div style="position: absolute; left: 730px; top: 490px; color: white; font-size: 27px; ">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a style="color:white" asp-controller="FeedBacks" asp-action="CreateFeedBack">
+                    Feedback göndermek için lütfen tıklayın.
+                </a>
+
+            }
+            else
+            {
+                <a style="color:white" asp-controller="Auth" asp-action="Login">
+                    Feedback göndermek için lütfen giriş yapın.
+                </a>
+            }
+        </div>
+    </div>
+</div>

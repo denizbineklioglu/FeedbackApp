@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Feedback</title>
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css' />
+
+    <!---menu--->
+    <link rel="stylesheet" href="css/superfish.css" media="screen" />
+    <script src="js/jquery-1.9.0.min.js"></script>
+    <script src="js/hoverIntent.js"></script>
+    <script src="js/superfish.js"></script>
+    <div>
+        <script>// initialise plugins
+            jQuery(function () {
+                jQuery('#example').superfish({
+                    //useClick: true
+                });
+            });</script>
+    </div>
+
+</head>
+<body>
+    <div class="header-wrap">
+        <div class="logo">
+            <h1>Feedbacks</h1>
+        </div>
+        <div class="menu">
+            <img src="images/menu-left.png" alt="image" />
+            <ul class="sf-menu" id="example">
+                <li><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a asp-controller="FeedBacks" asp-action="GetIncomingFeedback">Feedbacklerim</a></li>
+                    <li><a asp-controller="FeedBacks" asp-action="CreateFeedback">Feedback Gönder</a> </li>
+                    <li><a asp-controller="FeedBacks" asp-action="GetSentFeedbacks">Gönderdiğim Feedbackler</a> </li>
+                    <li>
+                        <a class="nav-link text-dark" asp-controller="Auth" asp-action="Logout">
+                            @User.Identity.Name (Çıkış Yap)
+                        </a>
+                    </li>
+                }
+
+                else
+                {
+                    <li>
+                        <a class="nav-link text-dark" asp-controller="Auth" asp-action="Login"> Giriş Yap</a>
+                    </li>
+                }
+            </ul>
+            <img src="images/menu-right.png" alt="image" />
+        </div>
+    </div>
+    <!---header-wrap--->
+    <div class="clear"></div>
+
+    @RenderBody()
+    <!---page-wrap-end--->
+    <div class="footer-wrap">
+        <div class="footer" style="display:flex; justify-content:center">
+            <div class="panel marRight30">
+                <div class="title">
+                    <h1 style="text-align:center">Hızlı İşlemler</h1>
+                </div>
+                <div class="content">
+                    <ul style="text-align:center">
+                        <li><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li><a asp-controller="FeedBacks" asp-action="GetIncomingFeedback">Feedbacklerim</a></li>
+                            <li><a asp-controller="FeedBacks" asp-action="CreateFeedback">Feedback Gönder</a> </li>
+                            <li><a asp-controller="FeedBacks" asp-action="GetSentFeedbacks">Gönderdiğim Feedbackler</a> </li>
+                            <li>
+                                <a class="nav-link text-dark" asp-controller="Auth" asp-action="Logout">
+                                    @User.Identity.Name (Çıkış Yap)
+                                </a>
+                            </li>
+                        }
+
+                        else
+                        {
+                            <li>
+                                <a class="nav-link text-dark" asp-controller="Auth" asp-action="Login"> Giriş Yap</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!---footer-wrap--->
+    <div class="clear"></div>
+    <div class="copyright-wrap">
+        <div class="copyright">
+            <div class="content">
+                <p style="display:flex; justify-content:center">
+                    © 2023 All Rights Reserved
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
