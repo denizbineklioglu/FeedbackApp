@@ -3,6 +3,7 @@ namespace FeedbackApp.DataTransferObjects.Requests
 {
 	public class UserRegisterRequest
 	{
+        public string UserName { get; set; }    
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

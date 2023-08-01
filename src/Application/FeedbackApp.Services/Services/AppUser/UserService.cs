@@ -2,6 +2,7 @@
 using FeedbackApp.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace FeedbackApp.Services.Services.AppUser;
 
@@ -9,13 +10,19 @@ public class UserService:IUserService
 {
     private readonly UserManager<User> _userManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IConfiguration _configuration;
 
-    public UserService(UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+    public UserService(UserManager<User> userManager, IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
     {
         _userManager = userManager;
         _httpContextAccessor = httpContextAccessor;
+        _configuration = configuration;
     }
 
+    public string GetSender()
+    {
+        return _configuration.GetSection("EmailConfiguration:Username").Value;
+    }
 
     public async Task<User?> GetByIdAsync(int id)
     {

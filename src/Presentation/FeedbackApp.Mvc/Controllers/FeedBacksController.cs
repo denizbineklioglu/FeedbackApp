@@ -1,6 +1,8 @@
 ﻿using FeedbackApp.DataTransferObjects.Requests;
 using FeedbackApp.Services.Services.AppUser;
+using FeedbackApp.Services.Services.Email;
 using FeedbackApp.Services.Services.Feedback;
+using FeedbackApp.Services.Services.Schedule;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FeedbackApp.Mvc.Controllers;
@@ -30,6 +32,9 @@ public class FeedBacksController : Controller
         if (ModelState.IsValid)
         {
             await _feedBackService.CreateFeedBack(model);
+            //var senderMail = _userService.GetSender();
+            //ScheduleService.ScheduleSendFeedBackEmail(senderMail,model.ReceiverMail);
+            ScheduleService.ScheduleSendFeedBackEmail(model.ReceiverMail, model.ReceiverMail);
             return RedirectToAction("Index", "Home");
         }
         return View();

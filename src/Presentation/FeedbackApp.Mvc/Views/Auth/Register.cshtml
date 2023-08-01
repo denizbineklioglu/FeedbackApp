@@ -133,6 +133,8 @@
         <hr />
         <div class="form">
             <form class="login-form" asp-controller="Auth" asp-action="Register" asp-route-returnUrl="@ViewBag.ReturnUrl">
+                <input type="text" placeholder="username" asp-for="UserName" type="text" class="form-control" required />
+
                 <input type="text" placeholder="firstname" asp-for="FirstName" type="text" class="form-control" required />
                 <input type="text" placeholder="lastname" asp-for="LastName" type="text" class="form-control" required />
 

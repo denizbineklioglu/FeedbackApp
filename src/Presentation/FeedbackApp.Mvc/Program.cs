@@ -5,9 +5,12 @@ using FeedbackApp.Infrastructure.Repositories.EntityFramework;
 using FeedbackApp.Services.Mapping;
 using FeedbackApp.Services.Services.AppUser;
 using FeedbackApp.Services.Services.Auth;
+using FeedbackApp.Services.Services.Constants;
+using FeedbackApp.Services.Services.Email;
 using FeedbackApp.Services.Services.Feedback;
 using Hangfire;
 using Hangfire.PostgreSql;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -49,7 +52,7 @@ builder.Services.AddScoped<IFeedBackRepository, EFFeedBackRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+builder.Services.AddScoped<IMailService, MailService>();
 /*
 var connectionString = builder.Configuration.GetConnectionString("FeedBack");
 builder.Services.AddEntityFrameworkNpgsql().AddDbContext<FeedBackContext>(opt =>
@@ -70,9 +73,29 @@ builder.Services.AddDbContext<HangfireContext>(opt =>
 
 
 
-builder.Services.AddHangfire(configuration =>
-        configuration.UseSqlServerStorage(builder.Configuration.GetConnectionString("Hangfire")));
+builder.Services.AddHangfire(config =>
+{
+    var option = new SqlServerStorageOptions
+    {
+        PrepareSchemaIfNecessary = true,
+        QueuePollInterval = TimeSpan.FromMinutes(5),
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        UseRecommendedIsolationLevel = true,
+        UsePageLocksOnDequeue = true,
+        DisableGlobalLocks = true
+    };
+    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("Hangfire"), option)
+          .WithJobExpirationTimeout(TimeSpan.FromHours(6));
+});
 builder.Services.AddHangfireServer();
+
+GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 7 });
+
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration")
+                               .Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+
 
 /*
 builder.Services.AddHangfire(configuration =>

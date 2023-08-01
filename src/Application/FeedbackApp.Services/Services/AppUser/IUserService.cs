@@ -10,6 +10,8 @@ namespace FeedbackApp.Services.Services.AppUser
         Task<bool> CreateAsync(User user, string password);
         Task<User?> GetCurrentUser();
 
+        string GetSender();
+
     }
 }
 
